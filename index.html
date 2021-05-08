@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="midscreen.css">
     <link rel="stylesheet" href="color-box.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/scripts/general ui.js"></script>
+    <script src="./assets/scripts/tools.js"></script>
 </head>
-<body onload="setup()">
+<body onload="setup(); init_canvas();">
     <div class="menu-bar">
         <ul>
             <li><a href="">File</a></li>
@@ -43,7 +45,7 @@
             <div id="options-box"></div>
         </div>
         <div id="draw-area">
-            <canvas id="canvas" width="1152" height="648" onmousemove="coords_update(this.id)" onmouseout="coords_reset()"></canvas>
+            <canvas id="canvas" width="1152" height="648" onmouseout="coords_reset()"></canvas>
         </div>
     </div>
     <div class="color-bar">
