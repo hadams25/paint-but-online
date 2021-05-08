@@ -6,7 +6,7 @@
     border-top: 1px solid #FFFFFF;
     display: flex;
     flex-direction: row;
-    
+
 }
 
 .color-boxes
@@ -15,4 +15,10 @@
     border-left: 1px solid #000000;
     border-right: 1px solid #F0F0F0;
     border-bottom: 1px solid #F0F0F0;
+}
+
+.color-bar #spacer
+{
+    height: 100%;
+    width: 100%;
 }
