@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>untitled - Paint</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="midscreen.css">
+    <script src="./assets/scripts/toolbox.js"></script>
+</head>
+<body onload="setup()">
+    <div class="menu-bar">
+        <ul>
+            <li><a href="">File</a></li>
+            <li><a href="">Edit</a></li>
+            <li><a href="">View</a></li>
+            <li><a href="">Image</a></li>
+            <li><a href="">Colors</a></li>
+            <li><a href="">Help</a></li>
+        </ul>
+    </div>
+    <div class="mid-screen">
+        <div class="tool-bar">
+            <ul id="tools">
+                <li id="poly_select" onclick="toolbox_handler(this.id)"></li>
+                <li id="rect_select" onclick="toolbox_handler(this.id)"></li>
+                <li id="eraser" onclick="toolbox_handler(this.id)"></li>
+                <li id="fill" onclick="toolbox_handler(this.id)"></li>
+                <li id="dropper" onclick="toolbox_handler(this.id)"></li>
+                <li id="zoom" onclick="toolbox_handler(this.id)"></li>
+                <li id="pencil" onclick="toolbox_handler(this.id)"></li>
+                <li id="brush" onclick="toolbox_handler(this.id)"></li>
+                <li id="airbrush" onclick="toolbox_handler(this.id)"></li>
+                <li id="text" onclick="toolbox_handler(this.id)"></li>
+                <li id="line" onclick="toolbox_handler(this.id)"></li>
+                <li id="curve" onclick="toolbox_handler(this.id)"></li>
+                <li id="rectangle" onclick="toolbox_handler(this.id)"></li>
+                <li id="polygon" onclick="toolbox_handler(this.id)"></li>
+                <li id="circle" onclick="toolbox_handler(this.id)"></li>
+                <li id="round_rectangle" onclick="toolbox_handler(this.id)"></li>
+            </ul>
+            <div id="options-box"></div>
+        </div>
+        <div id="draw-area">
+            <canvas id="canvas" width="1152" height="648"></canvas>
+        </div>
+    </div>
+    <div class="color-bar"></div>
+    <div class="footer-border"></div>
+    <footer>
+        <div id="desc-text">For Help, click Help Topics on the Help Menu.</div>
+        <div id="coords"></div>
+        <div id="spacer"></div>
+        <div id="corner-box"></div>
+    </footer>
+</body>
+</html>
