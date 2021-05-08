@@ -7,10 +7,7 @@ function setup()
     for(var i = 0; i < tools.length; i++)
     {
         tools[i].style.backgroundImage = "url('./assets/toolbar/"+tools[i].id+".png')";
-        tools[i].style.backgroundSize = "1rem";
-        tools[i].style.backgroundRepeat = "no-repeat";
-        tools[i].style.backgroundPosition = "center";
-        tools[i].style.imageRendering = "crisp-edges";
+        tools[i].className = "unselected"
     } 
 
     //fill canvas with white by default
