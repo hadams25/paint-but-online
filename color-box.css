@@ -11,10 +11,15 @@
 
 .color-boxes
 {
-    border-top: 1px solid #000000;
-    border-left: 1px solid #000000;
+    box-sizing: border-box;
     border-right: 1px solid #F0F0F0;
     border-bottom: 1px solid #F0F0F0;
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    height: calc(.825rem + 1px);
+    width: calc(.825rem + 1px);
+    margin-right: .125rem;
+    margin-top: .125rem;
 }
 
 .color-bar #spacer
@@ -29,4 +34,18 @@
     width: fit-content;
     display: flex;
     flex-direction: column;
+}
+
+#palette-top-row, #palette-bottom-row
+{
+    display: flex;
+    flex-direction: row;
+}
+
+#sel-colors
+{
+    min-height: 2rem;
+    min-width: 2rem;
+    margin-left: 0.25rem;
+    background-color: tomato;
 }
