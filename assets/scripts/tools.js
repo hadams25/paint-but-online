@@ -1,5 +1,7 @@
 //tools each have a left click function, a right click function, and optionally, option selections
 
+current_tool = null;
+
 class tools
 {
     constructor(name)
@@ -26,4 +28,22 @@ class tools
     {
         document.getElementById("options-box").textContent = "NONE"
     }
+}
+
+class dropper extends tools
+{
+    on_left_click()
+    {
+
+    }
+    on_right_click()
+    {
+
+    }
+    populate_options(){}
+}
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return [evt.clientX - rect.left, evt.clientY - rect.top]
 }

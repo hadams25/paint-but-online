@@ -1,6 +1,8 @@
 current_tool = null;
 primary_color = "#000000";
 secondary_color = "#FFFFFF";
+mouseX = 0;
+mouseY = 0;
 
 var help_strings = [
     "Selects a free-form part of the picture to move, copy, or edit.",
@@ -157,6 +159,8 @@ function coords_update(id)
     let canvas = document.getElementById(id).getBoundingClientRect();
     let x = event.clientX - canvas.left;
     let y = event.clientY - canvas.top;
+    mouseX = x;
+    mouseY = y;
     document.getElementById("coords").textContent = String(parseInt(x)) +", " + String(parseInt(y));
 }
 
