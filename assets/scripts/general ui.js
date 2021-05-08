@@ -151,3 +151,16 @@ function help_reset()
 {
     document.getElementById("desc-text").textContent = "For Help, click Help Topics on the Help Menu.";
 }
+
+function coords_update(id)
+{
+    let canvas = document.getElementById(id).getBoundingClientRect();
+    let x = event.clientX - canvas.left;
+    let y = event.clientY - canvas.top;
+    document.getElementById("coords").textContent = String(parseInt(x)) +", " + String(parseInt(y));
+}
+
+function coords_reset()
+{
+    document.getElementById("coords").textContent = "";
+}
