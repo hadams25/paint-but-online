@@ -6,7 +6,7 @@
     border-top: 1px solid #FFFFFF;
     display: flex;
     flex-direction: row;
-
+    align-items: center;
 }
 
 .color-boxes
@@ -34,6 +34,7 @@
     width: fit-content;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #palette-top-row, #palette-bottom-row

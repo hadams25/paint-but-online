@@ -13,11 +13,16 @@ function setup()
     } 
 
     //add colors to color picker
+    //get palette top row element
     var top_row = document.getElementById("palette-top-row");
+    //disable right click menu
     top_row.addEventListener("contextmenu", e => e.preventDefault());
+    //list default colors
     var top_default_colors = ["#000000", "#808080", "#800000", "#808000", "#008000", "#008080", 
     "#000080", "#800080", "#808040", "#004040", "#0080FF", "#004080", "#8000FF", "#804000"];
 
+    //add an element for each color in the default color list, set it's id to it's respective color,
+    //disable right click, then add to parent element
     for(var i = 0; i < top_default_colors.length; i++)
     {
         let box_color = document.createElement("div");
@@ -30,11 +35,16 @@ function setup()
         top_row.appendChild(box_color);
     }
 
+    //get palette bottom row element
     var bottom_row = document.getElementById("palette-bottom-row");
+    //disable right click menu
     bottom_row.addEventListener("contextmenu", e => e.preventDefault());
+    //list default colors
     var bottom_default_colors = ["#FFFFFF", "#C0C0C0", "#FF0000", "#FFFF00", "#00FF00", "#00FFFF", 
     "#0000FF", "#FF00FF", "#FFFF80", "#00FF80", "#80FFFF", "#8080FF", "#FF0080", "#FF8040"];
 
+    //add an element for each color in the default color list, set it's id to it's respective color,
+    //disable right click, then add to parent element
     for(var i = 0; i < bottom_default_colors.length; i++)
     {
         let box_color = document.createElement("div");
