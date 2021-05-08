@@ -48,5 +48,24 @@
     min-height: 2rem;
     min-width: 2rem;
     margin-left: 0.25rem;
-    background-color: tomato;
+    box-sizing: border-box;
+    padding: .25rem;
+    padding-top: .125rem;
+    padding-bottom: .125rem;
+    display: flex;
+    flex-direction: column;
 }
+
+#primary, #secondary
+{
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}
+
+#sel-colors, #primary, #secondary
+{
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+

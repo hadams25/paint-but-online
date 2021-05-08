@@ -2,6 +2,44 @@ current_tool = null;
 primary_color = "#000000";
 secondary_color = "#FFFFFF";
 
+var help_strings = [
+    "Selects a free-form part of the picture to move, copy, or edit.",
+    "Selects a rectangular part of the picture to move, copy, or edit.",
+    "Erases a portion of the picture, using the selected eraser shape.",
+    "Fills an area with the current drawing color.",
+    "Picks up a color from the picture for drawing.",
+    "Changes the magnification.",
+    "Draws a free-form line one pixel wide.",
+    "Draws using a brush with the selected shape and size.",
+    "Draws using an airbrush of the selected size.",
+    "Inserts text into the picture.",
+    "Draws a straight line with the selected line width.",
+    "Draws a curved line with the selected line width.",
+    "Draws a rectangle with the selected fill style.",
+    "Draws a polygon with the selected fill style.",
+    "Draws an ellipse with the selected fill style.",
+    "Draws a rounded rectangle with the selected fill style."
+];
+
+var tools_tool_tips = [
+    "Free-Form Select",
+    "Select",
+    "Erase/Color Eraser",
+    "Fill With Color",
+    "Pick Color",
+    "Magnifier",
+    "Pencil",
+    "Brush",
+    "Airbrush",
+    "Text",
+    "Line",
+    "Curve",
+    "Rectangle",
+    "Polygon",
+    "Ellipse",
+    "Rounded Rectangle"
+];
+
 function setup()
 {
     //load in icons
@@ -10,6 +48,10 @@ function setup()
     {
         tools[i].style.backgroundImage = "url('./assets/toolbar/"+tools[i].id+".png')";
         tools[i].className = "unselected"
+        tools[i].setAttribute("onmouseover", "help_text(this.id)");
+        tools[i].setAttribute("onmouseout", "help_reset()");
+        tools[i].setAttribute("data-index", i);
+        tools[i].setAttribute("title", tools_tool_tips[i]);
     } 
 
     //add colors to color picker
@@ -63,6 +105,13 @@ function setup()
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    //fill default primary and secondary colors
+    let primary_box = document.getElementById("primary");
+    primary_box.style.backgroundColor = primary_color;
+
+    let secondary_box = document.getElementById("secondary");
+    secondary_box.style.backgroundColor = secondary_color;
 }
 
 function toolbox_handler(id)
@@ -80,10 +129,25 @@ function toolbox_handler(id)
 function set_primary_color(id)
 {
     primary_color = id;
+    let primary_box = document.getElementById("primary");
+    primary_box.style.backgroundColor = primary_color;
 }
 
 function set_secondary_color(id)
 {
     secondary_color = id;
+    let secondary_box = document.getElementById("secondary");
+    secondary_box.style.backgroundColor = secondary_color;
     return false;
+}
+
+function help_text(id)
+{
+    var index = document.getElementById(id).getAttribute("data-index");
+    document.getElementById("desc-text").textContent = help_strings[index];
+}
+
+function help_reset()
+{
+    document.getElementById("desc-text").textContent = "For Help, click Help Topics on the Help Menu.";
 }
