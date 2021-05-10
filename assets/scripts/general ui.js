@@ -41,7 +41,7 @@ var tools_tool_tips = [
 
 function setup()
 {
-    //load in icons
+    //load in tool icons
     var tools = document.getElementById("tools").children;
     for(var i = 0; i < tools.length; i++)
     {
@@ -51,59 +51,54 @@ function setup()
         tools[i].setAttribute("onmouseout", "help_reset()");
         tools[i].setAttribute("data-index", i);
         tools[i].setAttribute("title", tools_tool_tips[i]);
+        if(tools[i].id == current_tool.name)
+        {
+            tools[i].className = "selected";
+        }
     } 
 
     //add colors to color picker
+
+    function populate_color_bar(parent, colors, left_click, right_click)
+    {
+        for(var i = 0; i < colors.length; i++)
+        {
+            let box_color = document.createElement("div");
+            box_color.className = "color-boxes";
+            box_color.style.backgroundColor = colors[i];
+            box_color.id = colors[i];
+            box_color.setAttribute("onclick", left_click);
+            box_color.setAttribute("oncontextmenu", right_click);
+            box_color.addEventListener("contextmenu", e => e.preventDefault());
+            parent.appendChild(box_color);
+        }
+    }
+
     //get palette top row element
-    var top_row = document.getElementById("palette-top-row");
+    let top_row = document.getElementById("palette-top-row");
     //disable right click menu
     top_row.addEventListener("contextmenu", e => e.preventDefault());
-    //list default colors
-    var top_default_colors = ["#000000", "#808080", "#800000", "#808000", "#008000", "#008080", 
-    "#000080", "#800080", "#808040", "#004040", "#0080FF", "#004080", "#8000FF", "#804000"];
 
-    //add an element for each color in the default color list, set it's id to it's respective color,
-    //disable right click, then add to parent element
-    for(var i = 0; i < top_default_colors.length; i++)
-    {
-        let box_color = document.createElement("div");
-        box_color.className = "color-boxes";
-        box_color.style.backgroundColor = top_default_colors[i];
-        box_color.id = top_default_colors[i];
-        box_color.setAttribute("onclick", "set_primary_color(this.id)");
-        box_color.setAttribute("oncontextmenu", "set_secondary_color(this.id)");
-        box_color.addEventListener("contextmenu", e => e.preventDefault());
-        top_row.appendChild(box_color);
-    }
+    //fill top row
+    populate_color_bar(
+        top_row,
+        ["#000000", "#808080", "#800000", "#808000", "#008000", "#008080", "#000080", "#800080", "#808040", "#004040", "#0080FF", "#004080", "#8000FF", "#804000"],
+        "set_primary_color(this.id)",
+        "set_secondary_color(this.id)"
+    );
 
     //get palette bottom row element
-    var bottom_row = document.getElementById("palette-bottom-row");
+    let bottom_row = document.getElementById("palette-bottom-row");
     //disable right click menu
     bottom_row.addEventListener("contextmenu", e => e.preventDefault());
-    //list default colors
-    var bottom_default_colors = ["#FFFFFF", "#C0C0C0", "#FF0000", "#FFFF00", "#00FF00", "#00FFFF", 
-    "#0000FF", "#FF00FF", "#FFFF80", "#00FF80", "#80FFFF", "#8080FF", "#FF0080", "#FF8040"];
 
-    //add an element for each color in the default color list, set it's id to it's respective color,
-    //disable right click, then add to parent element
-    for(var i = 0; i < bottom_default_colors.length; i++)
-    {
-        let box_color = document.createElement("div");
-        box_color.className = "color-boxes";
-        box_color.style.backgroundColor = bottom_default_colors[i];
-        box_color.id = bottom_default_colors[i];
-        box_color.setAttribute("onclick", "set_primary_color(this.id)");
-        box_color.setAttribute("oncontextmenu", "set_secondary_color(this.id)");
-        box_color.addEventListener("contextmenu", e => e.preventDefault());
-        bottom_row.appendChild(box_color);
-    }
-
-    //fill canvas with white by default
-    var canvas = document.getElementById("canvas");
-    canvas.addEventListener("contextmenu", e => e.preventDefault());
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //fill bottom row
+    populate_color_bar(
+        bottom_row,
+        ["#FFFFFF", "#C0C0C0", "#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF", "#FFFF80", "#00FF80", "#80FFFF", "#8080FF", "#FF0080", "#FF8040"],
+        "set_primary_color(this.id)",
+        "set_secondary_color(this.id)"
+    );
 
     //fill default primary and secondary colors
     let primary_box = document.getElementById("primary");
@@ -121,7 +116,15 @@ function toolbox_handler(id)
         tools[i].className = "unselected";
     }
 
-    current_tool = id;
+    for(var i = 0; i < tool_box.length; i++)
+    {
+        if (id == tool_box[i].name)
+        {
+            current_tool = tool_box[i];
+        }
+    }
+
+    current_tool.on_start();
     document.getElementById(id).className = "selected";
 }
 

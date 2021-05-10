@@ -82,11 +82,19 @@
     height: 100%;
     width: 100%;
     overflow: auto;
+    position: relative;
 }
 
-#canvas
+#canvas, #effect-layer
 {
-    margin-top: .15rem;
-    margin-left: .15rem;
     margin-right: .35vw;
+    position: absolute;
+    left: .15rem; 
+    top: .15rem;
+    z-index: 0;
+}
+
+#effect-layer
+{
+    z-index: 1;
 }
