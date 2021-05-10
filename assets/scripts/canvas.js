@@ -158,6 +158,15 @@ class interact_canvas extends canvas
     }
     mouse_leave(e)
     {
+        this.update_mouse_coords(e);
+        if(mouse_pressed.left)
+        {
+            current_tool.on_left_click(e)
+        }
+        if(mouse_pressed.right)
+        {
+            current_tool.on_right_click(e)
+        }
         mouse_pressed.left = false;
         mouse_pressed.right = false;
         coords_reset();
