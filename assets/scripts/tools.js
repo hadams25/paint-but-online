@@ -1,164 +1,6 @@
 mouse_pos = {x: 0, y: 0};
 last_mouse_pos = {x:0, y:0};
 mouse_pressed = {left:false, right:false};
-var ctx;
-var ongoingTouches = [];
-
-
-function init_canvas() 
-{
-
-    let canvas = document.getElementById('canvas');
-    let effect_layer = document.getElementById("effect-layer");
-    ctx = canvas.getContext("2d");
-
-    //fill canvas with white by default
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    //remove right click menu
-    canvas.addEventListener("contextmenu", e => e.preventDefault());
-    effect_layer.addEventListener("contextmenu", e => e.preventDefault());
-
-    $('#effect-layer').mousedown(function (e) 
-    {
-        //left click is 0, right click is 2
-        if(e.button == 0)
-        {
-            mouse_pressed.left = true;
-            current_tool.on_left_click(e);
-        }
-        if(e.button == 2)
-        {
-            mouse_pressed.right = true;
-            current_tool.on_right_click(e);
-        }
-    });
-
-    $("#effect-layer").on("touchstart", function (e)
-    {
-        e.preventDefault();
-        var touches = e.changedTouches;
-
-        let canvas_area = canvas.getBoundingClientRect();
-        mouse_pos.x = e.changedTouches[0].pageX - canvas_area.left;
-        mouse_pos.y = e.changedTouches[0].pageY - canvas_area.top;
-        last_mouse_pos.x = mouse_pos.x;
-        last_mouse_pos.y = mouse_pos.y;
-        mouse_pressed.left = true;
-        document.getElementById("coords").textContent = String(parseInt(mouse_pos.x)) +", " + String(parseInt(mouse_pos.y));
-
-        for (var i = 0; i < touches.length; i++) 
-        {
-            ongoingTouches.push(copyTouch(touches[i]));
-            current_tool.on_left_click(e);
-        }
-    });
-
-    $("#effect-layer").on("touchmove", function (e)
-    {
-        e.preventDefault();
-        var touches = e.changedTouches;
-
-        let canvas_area = canvas.getBoundingClientRect();
-        last_mouse_pos.x = mouse_pos.x;
-        last_mouse_pos.y = mouse_pos.y;
-        mouse_pos.x = e.changedTouches[0].pageX - canvas_area.left;
-        mouse_pos.y = e.changedTouches[0].pageY - canvas_area.top;
-        document.getElementById("coords").textContent = String(parseInt(mouse_pos.x)) +", " + String(parseInt(mouse_pos.y));
-
-        for (var i = 0; i < touches.length; i++) 
-        {
-            var idx = ongoingTouchIndexById(touches[i].identifier);
-
-            if (idx >= 0) 
-            {
-                current_tool.on_left_click(e);
-                ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
-            }
-        }
-    });
-
-    $("#effect-layer").on("touchend", function (e)
-    {
-        e.preventDefault();
-        var touches = e.changedTouches;
-        let canvas_area = canvas.getBoundingClientRect();
-        last_mouse_pos.x = mouse_pos.x;
-        last_mouse_pos.y = mouse_pos.y;
-        mouse_pos.x = e.changedTouches[0].pageX - canvas_area.left;
-        mouse_pos.y = e.changedTouches[0].pageY - canvas_area.top;
-        mouse_pressed.left = false;
-
-        for (var i = 0; i < touches.length; i++) 
-        {
-            var idx = ongoingTouchIndexById(touches[i].identifier);
-
-            if (idx >= 0) 
-            {
-                current_tool.on_left_click(e);
-                ongoingTouches.splice(idx, 1);  // remove it; we're done
-            }
-        }
-
-        coords_reset();
-    });
-
-
-    $('#effect-layer').mousemove(function (e) 
-    {
-        if(mouse_pressed.left)
-        {
-            current_tool.on_left_click(e)
-        }
-        if(mouse_pressed.right)
-        {
-            current_tool.on_right_click(e)
-        }
-
-        let canvas_area = canvas.getBoundingClientRect();
-        last_mouse_pos.x = mouse_pos.x;
-        last_mouse_pos.y = mouse_pos.y;
-        mouse_pos.x = e.clientX - canvas_area.left;
-        mouse_pos.y = e.clientY - canvas_area.top;
-        document.getElementById("coords").textContent = String(parseInt(mouse_pos.x)) +", " + String(parseInt(mouse_pos.y));
-    });
-
-    $('#effect-layer').mouseup(function (e) 
-    {
-        //left click is 0, right click is 2
-        if(e.button == 0)
-        {
-            mouse_pressed.left = false;
-        }
-        if(e.button == 2)
-        {
-            mouse_pressed.right = false;
-        }
-    });
-    
-    $('#effect-layer').mouseleave(function (e) 
-    {
-        mouse_pressed.left = false;
-        mouse_pressed.right = false;
-    });
-}
-
-function ongoingTouchIndexById(idToFind) {
-    for (var i = 0; i < ongoingTouches.length; i++) {
-      var id = ongoingTouches[i].identifier;
-  
-      if (id == idToFind) {
-        return i;
-      }
-    }
-    return -1;    // not found
-}
-
-function copyTouch({ identifier, pageX, pageY }) {
-  return { identifier, pageX, pageY };
-}
-
 
 //tools each have a left click function, a right click function, and optionally, option selections
 
@@ -193,16 +35,16 @@ class tools
         document.getElementById("options-box").textContent = "NONE"
     }
 
-    draw(start, end, context, color, width)
+    draw(start, end, canvas, color, width)
     {
-        context.beginPath();
-        context.strokeStyle = color;
-        context.lineWidth = width;
-        context.lineJoin = "round"
-        context.moveTo(start.x,start.y);
-        context.lineTo(end.x, end.y);
-        context.closePath();
-        context.stroke();
+        canvas.ctx.beginPath();
+        canvas.ctx.strokeStyle = color;
+        canvas.ctx.lineWidth = width;
+        canvas.ctx.lineJoin = "round"
+        canvas.ctx.moveTo(start.x,start.y);
+        canvas.ctx.lineTo(end.x, end.y);
+        canvas.ctx.closePath();
+        canvas.ctx.stroke();
     }
 }
 
@@ -218,14 +60,14 @@ class pencil extends tools
     {
         if(mouse_pressed.left)
         {
-            this.draw(last_mouse_pos, mouse_pos, ctx, primary_color, 1);
+            this.draw(last_mouse_pos, mouse_pos, current_canvas, primary_color, 1);
         }
     }
     on_right_click(event)
     {
         if(mouse_pressed.right)
         {
-            this.draw(last_mouse_pos, mouse_pos, ctx, secondary_color, 1);
+            this.draw(last_mouse_pos, mouse_pos, current_canvas, secondary_color, 1);
         }
     }
 }
@@ -235,14 +77,14 @@ class brush extends tools
     {
         if(mouse_pressed.left)
         {
-            this.draw(last_mouse_pos, mouse_pos, ctx, primary_color, 5);
+            this.draw(last_mouse_pos, mouse_pos, current_canvas, primary_color, 5);
         }
     }
     on_right_click(event)
     {
         if(mouse_pressed.right)
         {
-            this.draw(last_mouse_pos, mouse_pos, ctx, secondary_color, 5);
+            this.draw(last_mouse_pos, mouse_pos, current_canvas, secondary_color, 5);
         }
     }
 }
@@ -252,14 +94,6 @@ class line extends tools
 {
     first_click = true;
     first_pos = {x: 0, y: 0};
-    effect_layer = null;
-    effect_ctx = null;
-
-    on_start()
-    {
-        this.effect_layer = document.getElementById("effect-layer");
-        this.effect_ctx = this.effect_layer.getContext("2d");
-    }
 
     on_left_click(event)
     {
@@ -271,7 +105,8 @@ class line extends tools
         // }
         // if((!this.first_click) && mouse_pressed.left)
         // {
-        this.effect_ctx.clearRect(0, 0, this.effect_layer.width, this.effect_layer.height);
+        let effect_layer = layers[layers.length - 1];
+        effect_layer.ctx.clearRect(0, 0, effect_layer.self.width, effect_layer.self.height);
         //     this.draw(this.first_pos, mouse_pos, this.effect_ctx, primary_color, 2);
         // }
     }
@@ -279,7 +114,8 @@ class line extends tools
     {
         if(mouse_pressed.right)
         {
-            this.draw(last_mouse_pos, mouse_pos, this.effect_ctx, secondary_color, 5);
+            let effect_layer = layers[layers.length - 1];
+            this.draw(last_mouse_pos, mouse_pos, effect_layer, secondary_color, 5);
         }
     }
 }

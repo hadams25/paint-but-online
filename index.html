@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="./assets/scripts/general ui.js"></script>
     <script src="./assets/scripts/tools.js"></script>
+    <script src="./assets/scripts/canvas.js"></script>
 </head>
 <body onload="setup(); init_canvas();">
     <div class="menu-bar">
@@ -45,8 +46,6 @@
             <div id="options-box"></div>
         </div>
         <div id="draw-area">
-            <canvas id="canvas" width="1152" height="648" onmouseout="coords_reset()"></canvas>
-            <canvas id="effect-layer" width="1152" height="648"></canvas>
         </div>
     </div>
     <div class="color-bar">

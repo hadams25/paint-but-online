@@ -85,16 +85,10 @@
     position: relative;
 }
 
-#canvas, #effect-layer
+.canvas
 {
     margin-right: .35vw;
     position: absolute;
     left: .15rem; 
     top: .15rem;
-    z-index: 0;
-}
-
-#effect-layer
-{
-    z-index: 1;
 }
