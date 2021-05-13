@@ -39,22 +39,45 @@ var tools_tool_tips = [
     "Rounded Rectangle"
 ];
 
+var tool_names = [
+    "poly_select",
+    "rect_select",
+    "eraser",
+    "fill",
+    "dropper",
+    "zoom",
+    "pencil",
+    "brush",
+    "airbrush",
+    "text",
+    "line",
+    "curve",
+    "rectangle",
+    "polygon",
+    "circle",
+    "round_rectangle"
+];
+
 function setup()
 {
     //load in tool icons
-    var tools = document.getElementById("tools").children;
-    for(var i = 0; i < tools.length; i++)
+    var tool_box = document.getElementById("tools");
+    for(var i = 0; i < tool_names.length; i++)
     {
-        tools[i].style.backgroundImage = "url('./assets/toolbar/"+tools[i].id+".png')";
-        tools[i].className = "unselected"
-        tools[i].setAttribute("onmouseover", "help_text(this.id)");
-        tools[i].setAttribute("onmouseout", "help_reset()");
-        tools[i].setAttribute("data-index", i);
-        tools[i].setAttribute("title", tools_tool_tips[i]);
-        if(tools[i].id == current_tool.name)
+        let tmp_tool = document.createElement("li");
+        tmp_tool.id = tool_names[i];
+        tmp_tool.style.backgroundImage = "url('./assets/toolbar/"+tool_names[i]+".png')";
+        tmp_tool.className = "unselected"
+        tmp_tool.setAttribute("onmouseover", "help_text(this.id)");
+        tmp_tool.setAttribute("onmouseout", "help_reset()");
+        tmp_tool.setAttribute("onclick", "toolbox_handler(this.id)")
+        tmp_tool.setAttribute("data-index", i);
+        tmp_tool.setAttribute("title", tools_tool_tips[i]);
+        if(tmp_tool.id == current_tool.name)
         {
-            tools[i].className = "selected";
+            tmp_tool.className = "selected";
         }
+        tool_box.appendChild(tmp_tool)
     } 
 
     //add colors to color picker

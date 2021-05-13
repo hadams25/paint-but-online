@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="midscreen.css">
     <link rel="stylesheet" href="color-box.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="./assets/scripts/general ui.js"></script>
-    <script src="./assets/scripts/tools.js"></script>
-    <script src="./assets/scripts/canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.4.0/fabric.js"></script>
+
+    <script defer src="./scripts/general ui.js"></script>
+    <script src="./scripts/tools.js"></script>
+    <script src="./scripts/canvas.js"></script>
 </head>
 <body onload="setup(); init_canvas();">
     <div class="menu-bar">
@@ -26,26 +29,11 @@
     <div class="mid-screen">
         <div class="tool-bar">
             <ul id="tools">
-                <li id="poly_select" onclick="toolbox_handler(this.id)"></li>
-                <li id="rect_select" onclick="toolbox_handler(this.id)"></li>
-                <li id="eraser" onclick="toolbox_handler(this.id)"></li>
-                <li id="fill" onclick="toolbox_handler(this.id)"></li>
-                <li id="dropper" onclick="toolbox_handler(this.id)"></li>
-                <li id="zoom" onclick="toolbox_handler(this.id)"></li>
-                <li id="pencil" onclick="toolbox_handler(this.id)"></li>
-                <li id="brush" onclick="toolbox_handler(this.id)"></li>
-                <li id="airbrush" onclick="toolbox_handler(this.id)"></li>
-                <li id="text" onclick="toolbox_handler(this.id)"></li>
-                <li id="line" onclick="toolbox_handler(this.id)"></li>
-                <li id="curve" onclick="toolbox_handler(this.id)"></li>
-                <li id="rectangle" onclick="toolbox_handler(this.id)"></li>
-                <li id="polygon" onclick="toolbox_handler(this.id)"></li>
-                <li id="circle" onclick="toolbox_handler(this.id)"></li>
-                <li id="round_rectangle" onclick="toolbox_handler(this.id)"></li>
             </ul>
             <div id="options-box"></div>
         </div>
         <div id="draw-area">
+            <div class="canvas"></div>
         </div>
     </div>
     <div class="color-bar">
